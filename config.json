@@ -1,0 +1,19 @@
+{
+  "Server": {
+    "Ip": "localhost",
+    "Port": 8082
+  },
+  "Storage": {
+    "Data": {
+      "PQ": {
+        "ConnectionString": "postgres://testuser:123@localhost/Test?sslmode=disable"
+      }
+    }
+  },
+  "Service": {
+    "Identity": {
+      "Address": "",
+      "Timeout": 30000
+    }
+  }
+}
