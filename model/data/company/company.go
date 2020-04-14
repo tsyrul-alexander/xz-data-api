@@ -8,9 +8,9 @@ import (
 )
 
 type Company struct {
-	base.Lookup
-	Address address.Address
-	Owner user.BaseUser
-	Icon image.Image
-	Images []image.Image
+	*base.Lookup
+	Address *address.Address `json:"address"`
+	Owner   *user.BaseUser   `json:"owner"`
+	Icon    *image.Image     `json:"icon"`
+	Images  []*image.Image
 }

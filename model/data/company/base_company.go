@@ -7,7 +7,8 @@ import (
 )
 
 type BaseCompany struct {
-	base.Lookup
-	Address address.BaseAddress
-	Icon image.Image
+	*base.Lookup
+	Category *Category            `json:"category"`
+	Address  *address.BaseAddress `json:"address"`
+	Icon     *image.Image         `json:"icon"`
 }

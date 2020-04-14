@@ -1,9 +1,13 @@
 package controller
 
-import "net/http"
+import (
+	"github.com/tsyrul-alexander/xz-identity-api/model"
+	"net/http"
+)
 
 type RouteRule struct {
 	MethodName string
 	MethodType string
-	Header func(w http.ResponseWriter, r *http.Request) interface{}
+	Handler func(w http.ResponseWriter, r *http.Request) interface{}
+	Roles []model.UserRole
 }

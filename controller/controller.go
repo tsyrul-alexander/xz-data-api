@@ -1,5 +1,5 @@
 package controller
 
 type Controller interface {
-	GetRoutes() (string, []RouteRule)
+	GetRoutes() (string, []*RouteRule)
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type User struct {
-	base.Lookup
-	Address address.Address
+	*base.Lookup
+	Address *address.Address
 	Roles []Role
 }

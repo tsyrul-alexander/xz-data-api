@@ -12,8 +12,8 @@
   },
   "Service": {
     "Identity": {
-      "Address": "",
-      "Timeout": 30000
+      "Address": "http://localhost:8081",
+      "Timeout": 3000000
     }
   }
 }
