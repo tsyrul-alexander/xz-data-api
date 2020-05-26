@@ -1,3 +1,7 @@
+CREATE TABLE "Culture" (
+	"Id" UUID PRIMARY KEY,
+	"Name" VARCHAR(250)
+);
 CREATE TABLE "Country" (
 	"Id" UUID PRIMARY KEY,
     "Name" VARCHAR (250)
@@ -22,6 +26,12 @@ CREATE TABLE "Image" (
 CREATE TABLE "Category" (
 	"Id" UUID PRIMARY KEY,
 	"Name" VARCHAR(250)
+);
+CREATE TABLE "CategoryLcz" (
+	"Id" UUID PRIMARY KEY,
+	"Name" VARCHAR(250),
+	"RecordId" UUID REFERENCES "Category"("Id") ON DELETE CASCADE,
+	"CultureId" UUID REFERENCES "Culture"("Id")
 );
 CREATE TABLE "Company" (
 	"Id" UUID PRIMARY KEY,

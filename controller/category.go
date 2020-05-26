@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/tsyrul-alexander/xz-data-api/model/data/company"
+	"github.com/tsyrul-alexander/xz-data-api/model/data/company/category"
 	"github.com/tsyrul-alexander/xz-data-api/model/request/query"
 	"github.com/tsyrul-alexander/xz-data-api/model/response"
 	"github.com/tsyrul-alexander/xz-data-api/storage"
@@ -32,7 +32,7 @@ func CreateCategoryController(dataStorage storage.DataStorage) *Category {
 }
 
 func (c *Category) AddHandler(_ http.ResponseWriter, r *http.Request) interface{} {
-	var ob = &company.Category{}
+	var ob = &category.AddCategory{}
 	if err := decodeJsonBody(r, ob); err != nil {
 		return response.CreateErrorResponse(err.Error())
 	}
@@ -55,10 +55,10 @@ func (c *Category) GetCategoryListHandler(w http.ResponseWriter, r *http.Request
 	return list
 }
 
-func (c *Category) add(ob *company.Category) error {
+func (c *Category) add(ob *category.AddCategory) error {
 	return c.DataStorage.AddCategory(ob)
 }
 
-func (c *Category) getCategoryList(o *query.Options) ([]*company.Category, error) {
+func (c *Category) getCategoryList(o *query.Options) ([]*category.Category, error) {
 	return c.DataStorage.GetCategories(o.GetDataOptions())
 }
