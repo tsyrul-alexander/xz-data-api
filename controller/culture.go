@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/tsyrul-alexander/xz-data-api/model/data/culture"
 	"github.com/tsyrul-alexander/xz-data-api/model/request/query"
 	"github.com/tsyrul-alexander/xz-data-api/model/response"
 	"github.com/tsyrul-alexander/xz-data-api/storage"
@@ -47,9 +48,9 @@ func (c *Culture) GetCultureListHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 func (c *Culture) AddCultureHandler(w http.ResponseWriter, r *http.Request) interface{} {
-
+	return nil //todo
 }
 
-func (c *Culture) getCultures(o *query.Options) ([]*Culture, error) {
+func (c *Culture) getCultures(o *query.Options) ([]*culture.Culture, error) {
 	return c.DataStorage.GetCultures(o.GetDataOptions())
 }

@@ -140,7 +140,7 @@ func (ds *DataStorage) AddCompany(c *company.Company) error {
 			queries = append(queries, ds.getCompanyImageInsert(c.Id, im.Id))
 		}
 	}
-	return query.ExecuteQueries(queries, db)
+	return query.ExecuteQueries(&queries, db)
 }
 
 func (ds *DataStorage) AddCountry(c *address.Country) error {
@@ -153,9 +153,9 @@ func (ds *DataStorage) AddCity(city *address.City) error {
 	return ds.executeInsert(i)
 }
 
-func (ds *DataStorage) AddCategory(category *category.AddCategory) error  {
-	var i = ds.getLookupInsert("Category", category.LookupLcz)
-	return ds.executeInsert(i)
+func (ds *DataStorage) AddCategory(category *category.AddCategory) error {
+	var inserts = ds.getLookupLczInsert("Category", category.LookupLcz)
+	return ds.executeQueries(inserts)
 }
 
 func (ds *DataStorage) getImageInsert(image *image.Image) *query.Insert {

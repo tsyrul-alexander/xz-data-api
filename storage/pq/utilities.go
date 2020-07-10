@@ -59,21 +59,21 @@ func (ds *DataStorage) getLookupInsert(tableName string, lookup *base.Lookup) *q
 	return builder.CreateInsert(tableName, &columnValues)
 }
 
-func (ds *DataStorage) getLookupLczInsert(tableName string, lookup *base.LookupLcz) *[]query.Insert {
+func (ds *DataStorage) getLookupLczInsert(tableName string, lookup *culture.LookupLcz) *[]query.Transaction {
 	var columnValues = column.ValueList{}
 	columnValues["Id"] = parameter.CreateGuidParameter(lookup.Id)
 	columnValues["Name"] = parameter.CreateStringParameter(lookup.Name.DefValue)
 	var lczInserts = ds.getLczInserts(tableName, "Name", lookup.Id, lookup.Name.Values)
 	var baseInsert = builder.CreateInsert(tableName, &columnValues)
-	var newLczInsertsArray = append([]query.Insert{*baseInsert}, *lczInserts...)
+	var newLczInsertsArray = append([]query.Transaction{baseInsert}, *lczInserts...)
 	return &newLczInsertsArray
 }
 
 func (ds *DataStorage) getLczInserts(tableName string, lczColumnName string, recordId uuid.UUID,
-	values *[]culture.Value) *[]query.Insert {
-	var inserts []query.Insert
+	values *[]culture.Value) *[]query.Transaction {
+	var inserts []query.Transaction
 	for _, value := range *values {
-		inserts = append(inserts, *ds.getLczInsert(tableName, lczColumnName, recordId, value))
+		inserts = append(inserts, ds.getLczInsert(tableName, lczColumnName, recordId, &value))
 	}
 	return &inserts
 }
@@ -100,6 +100,18 @@ func (ds *DataStorage) executeInsert(i *query.Insert) error {
 	if _, errExecute := i.Execute(db); errExecute != nil {
 		_ = db.Close()
 		return errDb
+	}
+	return db.Close()
+}
+
+func (ds *DataStorage) executeQueries(queries *[]query.Transaction) error {
+	var db, errDb = ds.getDbConnect()
+	if errDb != nil {
+		return errDb
+	}
+	var insertQuery = query.ExecuteQueries(queries, db)
+	if insertQuery != nil {
+		return insertQuery
 	}
 	return db.Close()
 }
